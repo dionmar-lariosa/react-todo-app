@@ -1,7 +1,7 @@
 {
-    "recommendations": [
-        "dbaeumer.vscode-eslint",
-        "burkeholland.simple-react-snippets",
-        "bradlc.vscode-tailwindcss"
-    ]
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "burkeholland.simple-react-snippets",
+    "bradlc.vscode-tailwindcss"
+  ]
 }
