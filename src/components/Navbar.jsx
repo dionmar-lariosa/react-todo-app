@@ -28,9 +28,6 @@ const Navbar = () => {
               <Link href="/user/profile">
                 <span className="ml-4 text-white">profile</span>
               </Link>
-              <Link href="/user/settings">
-                <span className="ml-4 text-white">setings</span>
-              </Link>
               <Link href="/login">
                 <span className="ml-4 text-white">login</span>
               </Link>
@@ -87,9 +84,6 @@ const Navbar = () => {
             </Link>
             <Link href="/user/profile">
               <span className="mt-1 block text-white">profile</span>
-            </Link>
-            <Link href="/user/settings">
-              <span className="mt-1 block text-white">setings</span>
             </Link>
             <Link href="/login">
               <span className="mt-1 block text-white">login</span>
