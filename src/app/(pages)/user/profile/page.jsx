@@ -3,7 +3,7 @@ import Link from "next/link";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 
-function Profile() {
+const Profile = () => {
   const user = {
     name: "John Doe",
     phoneNumber: "123-456-7890",
@@ -66,6 +66,6 @@ function Profile() {
       </div>
     </div>
   );
-}
+};
 
 export default Profile;

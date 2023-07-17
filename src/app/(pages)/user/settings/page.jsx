@@ -15,7 +15,7 @@ const schema = yup
   })
   .required();
 
-function Settings() {
+const Settings = () => {
   const {
     register,
     handleSubmit,
@@ -74,6 +74,6 @@ function Settings() {
       </div>
     </div>
   );
-}
+};
 
 export default Settings;
