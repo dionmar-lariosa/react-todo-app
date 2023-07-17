@@ -1,3 +1,4 @@
+import { Settings } from "react-feather";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 
@@ -15,7 +16,9 @@ function Profile() {
       <div className="w-full max-w-3xl md:w-2/3 lg:w-1/2 relative">
         <Card>
           <div className="flex items-center flex-wrap mb-8">
-            <div className="absolute top-0 right-0 mt-4 mr-4 ">settings</div>
+            <div className="absolute top-0 right-0 mt-4 mr-4 ">
+              <Settings size={20} />
+            </div>
             <div className="w-20 h-20 bg-gray-200 rounded-full mb-4 md:mb-0 md:mr-4"></div>
             <div className="ml-4">
               <h1 className="text-2xl font-bold">{user.name}</h1>
