@@ -26,12 +26,23 @@ const Login = () => {
     },
     resolver: yupResolver(schema),
   });
+  const email = register("email");
+  const password = register("password");
+
   const onSubmit = (data) => console.log(data);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className="mb-4">
-        <Input type="email" label="Email" id="email" {...register("email")} />
+        <Input
+          type="email"
+          label="Email"
+          id="email"
+          name={email.name}
+          onChange={email.onChange}
+          onBlur={email.onBlur}
+          ref={email.ref}
+        />
         {errors.email && <InputError message={errors.email?.message} />}
       </div>
       <div className="mb-6">
@@ -39,7 +50,10 @@ const Login = () => {
           type="password"
           label="Password"
           id="password"
-          {...register("password")}
+          name={password.name}
+          onChange={password.onChange}
+          onBlur={password.onBlur}
+          ref={password.ref}
         />
         {errors.password && <InputError message={errors.password?.message} />}
       </div>

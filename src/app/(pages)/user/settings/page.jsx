@@ -28,6 +28,10 @@ const Settings = () => {
     },
     resolver: yupResolver(schema),
   });
+  const name = register("name");
+  const email = register("email");
+  const phoneNumber = register("phoneNumber");
+
   const onSubmit = (data) => console.log(data);
 
   return (
@@ -42,7 +46,15 @@ const Settings = () => {
         </div>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="mb-4">
-            <Input type="text" label="Name" id="name" {...register("name")} />
+            <Input
+              type="text"
+              label="Name"
+              id="name"
+              name={name.name}
+              onChange={name.onChange}
+              onBlur={name.onBlur}
+              ref={name.ref}
+            />
             {errors.name && <InputError message={errors.name?.message} />}
           </div>
           <div className="mb-4">
@@ -50,7 +62,10 @@ const Settings = () => {
               type="email"
               label="Email"
               id="email"
-              {...register("email")}
+              name={email.name}
+              onChange={email.onChange}
+              onBlur={email.onBlur}
+              ref={email.ref}
             />
             {errors.email && <InputError message={errors.email?.message} />}
           </div>
@@ -59,7 +74,10 @@ const Settings = () => {
               type="number"
               label="Phone Number"
               id="phoneNumber"
-              {...register("phoneNumber")}
+              name={phoneNumber.name}
+              onChange={phoneNumber.onChange}
+              onBlur={phoneNumber.onBlur}
+              ref={phoneNumber.ref}
             />
             {errors.phoneNumber && (
               <InputError message={errors.phoneNumber?.message} />

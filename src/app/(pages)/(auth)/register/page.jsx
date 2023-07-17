@@ -37,16 +37,37 @@ const Register = () => {
     },
     resolver: yupResolver(schema),
   });
+  const name = register("name");
+  const email = register("email");
+  const password = register("password");
+  const confirmPassword = register("confirmPassword");
+
   const onSubmit = (data) => console.log(data);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className="mb-4">
-        <Input type="text" label="Name" id="name" {...register("name")} />
+        <Input
+          type="text"
+          label="Name"
+          id="name"
+          name={name.name}
+          onChange={name.onChange}
+          onBlur={name.onBlur}
+          ref={name.ref}
+        />
         {errors.name && <InputError message={errors.name?.message} />}
       </div>
       <div className="mb-4">
-        <Input type="email" label="Email" id="email" {...register("email")} />
+        <Input
+          type="email"
+          label="Email"
+          id="email"
+          name={email.name}
+          onChange={email.onChange}
+          onBlur={email.onBlur}
+          ref={email.ref}
+        />
         {errors.email && <InputError message={errors.email?.message} />}
       </div>
       <div className="mb-4">
@@ -55,7 +76,10 @@ const Register = () => {
           label="Password"
           id="password"
           placeholder="********"
-          {...register("password")}
+          name={password.name}
+          onChange={password.onChange}
+          onBlur={password.onBlur}
+          ref={password.ref}
         />
         {errors.password && <InputError message={errors.password?.message} />}
       </div>
@@ -65,7 +89,10 @@ const Register = () => {
           label="Confirm Password"
           id="confirmPassword"
           placeholder="********"
-          {...register("confirmPassword")}
+          name={confirmPassword.name}
+          onChange={confirmPassword.onChange}
+          onBlur={confirmPassword.onBlur}
+          ref={confirmPassword.ref}
         />
         {errors.confirmPassword && (
           <InputError message={errors.confirmPassword?.message} />
