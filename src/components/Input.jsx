@@ -8,7 +8,7 @@ export default forwardRef(function Input(
 ) {
   const inputRef = useRef();
 
-  const input = ref?.ref ? ref?.ref : inputRef;
+  const input = ref ? ref : inputRef;
 
   useEffect(() => {
     if (isFocused) {
