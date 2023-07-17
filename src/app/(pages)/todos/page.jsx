@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Input from "@/components/Input";
 import {
   PlusCircle,
   Edit,
@@ -10,6 +9,8 @@ import {
   CheckSquare,
   Maximize2,
 } from "react-feather";
+import Input from "@/components/Input";
+import Card from "@/components/Card";
 
 const Todos = () => {
   const {
@@ -56,7 +57,7 @@ const Todos = () => {
       </div>
       <div className="grid gap-5 md:grid-cols-3">
         {inputs.map((input, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-md">
+          <Card key={index}>
             <div className="p-4 flex flex-col">
               <div className="flex items-center space-x-4 mb-2">
                 <Edit
@@ -87,7 +88,7 @@ const Todos = () => {
                 />
               </form>
             </div>
-          </div>
+          </Card>
         ))}
       </div>
     </>
