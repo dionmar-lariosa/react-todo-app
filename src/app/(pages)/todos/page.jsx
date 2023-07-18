@@ -17,12 +17,12 @@ const schema = yup
   })
   .required();
 
-const modalConfigInit = { isOpen: false, msg: "", action: "" };
+const actionConfigInit = { isModalOpen: false, msg: "", for: "" };
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
   const [currentTodoId, setCurrentTodoId] = useState(null);
-  const [modalConfig, setModalConfig] = useState(modalConfigInit);
+  const [actionConfig, setActionConfig] = useState(actionConfigInit);
 
   const {
     register,
@@ -39,14 +39,14 @@ const Todos = () => {
   });
 
   const handleActionConfirmation = () => {
-    if (modalConfig.action === "delete") {
+    if (actionConfig.for === "delete") {
       onDeleteTodo(currentTodoId);
-    } else if (modalConfig.action === "complete") {
+    } else if (actionConfig.for === "complete") {
       completeTodo(currentTodoId);
     } else {
       return null;
     }
-    setModalConfig(modalConfigInit);
+    setActionConfig(actionConfigInit);
   };
 
   const onAddTodo = (data) => {
@@ -57,7 +57,7 @@ const Todos = () => {
 
   const handleEditTodo = (id) => {
     setCurrentTodoId(id);
-    setModalConfig({ isOpen: false, msg: "", action: "update" });
+    setActionConfig({ isModalOpen: false, msg: "", for: "update" });
     const todoToUpdate = todos.find((todo) => todo.id === id);
     if (todoToUpdate) {
       setValue("todo", todoToUpdate.todo);
@@ -71,7 +71,7 @@ const Todos = () => {
           todo.id === currentTodoId ? { ...todo, todo: data.todo } : todo,
         ),
       );
-      setModalConfig(modalConfigInit);
+      setActionConfig(actionConfigInit);
       setCurrentTodoId(null);
       reset();
     }
@@ -106,7 +106,7 @@ const Todos = () => {
       <div className="flex items-center">
         <h1 className="text-xl font-bold capitalize">todo list</h1>
       </div>
-      {modalConfig.action !== "update" ? (
+      {actionConfig.for !== "update" ? (
         <div className="max-w-5xl mx-auto px-4 mb-8">
           <Card>
             <form onSubmit={handleSubmit(onAddTodo)} className="flex flex-col">
@@ -136,10 +136,10 @@ const Todos = () => {
                       size={24}
                       className="cursor-pointer hover:text-red-500"
                       onClick={() => {
-                        setModalConfig({
-                          isOpen: true,
+                        setActionConfig({
+                          isModalOpen: true,
                           msg: "Are you sure you want to delete this todo?",
-                          action: "delete",
+                          for: "delete",
                         });
                         setCurrentTodoId(todo.id);
                       }}
@@ -157,16 +157,17 @@ const Todos = () => {
                           : "hover:text-green-500"
                       }`}
                       onClick={() => {
-                        setModalConfig({
-                          isOpen: true,
+                        setActionConfig({
+                          isModalOpen: true,
                           msg: "Are you sure you want to mark this todo as complete?",
-                          action: "complete",
+                          for: "complete",
                         });
                         setCurrentTodoId(todo.id);
                       }}
                     />
                   </div>
-                  {todo.id === currentTodoId && modalConfig.isOpen === false ? (
+                  {todo.id === currentTodoId &&
+                  actionConfig.isModalOpen === false ? (
                     <form onSubmit={handleSubmit(onUpdateTodo)}>
                       <TextArea autoFocus {...register("todo")} />
                       {errors.todo && (
@@ -193,13 +194,13 @@ const Todos = () => {
           })}
         </div>
       )}
-      {modalConfig.isOpen && (
+      {actionConfig.isModalOpen && (
         <Modal
           title="Confirm Action"
-          message={modalConfig.msg}
+          message={actionConfig.msg}
           onConfirm={handleActionConfirmation}
           onCancel={() => {
-            setModalConfig(modalConfigInit);
+            setActionConfig(actionConfigInit);
             setCurrentTodoId(null);
           }}
         />
