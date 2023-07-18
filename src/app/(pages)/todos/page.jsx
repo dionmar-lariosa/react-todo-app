@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Edit, Trash2, CheckSquare, Maximize2 } from "react-feather";
 import Card from "@/components/Card";
 import { useEffect, useState } from "react";
+import TextArea from "@/components/TextArea";
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
@@ -62,13 +63,7 @@ const Todos = () => {
       <div className="my-4 max-w-5xl mx-auto px-4">
         {!currentTodoId && (
           <form onSubmit={handleSubmit(onAddTodo)}>
-            <textarea
-              className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-blue-500 rounded-md"
-              id="todo"
-              cols="1"
-              rows="1"
-              {...register("todo")}
-            ></textarea>
+            <TextArea {...register("todo")} />
             <button
               type="submit"
               className="w-full px-4 py-2 bg-blue-500 text-white rounded-md"
@@ -108,14 +103,7 @@ const Todos = () => {
                   </div>
                   {todo.id === currentTodoId ? (
                     <form onSubmit={handleSubmit(onUpdateTodo)}>
-                      <textarea
-                        className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-blue-500 rounded-md"
-                        id="todo"
-                        cols="1"
-                        rows="1"
-                        {...register("todo")}
-                        autoFocus
-                      ></textarea>
+                      <TextArea autoFocus {...register("todo")} />
                       <button
                         type="submit"
                         className="w-full px-4 py-2 bg-blue-500 text-white rounded-md"
