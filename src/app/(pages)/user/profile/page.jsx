@@ -29,14 +29,14 @@ const Profile = () => {
           </div>
           <div className="flex flex-wrap mb-2">
             <div className="w-full md:w-1/2 mb-2 md:mb-0">
-              <div className="max-w-fit px-4 py-2 rounded-md bg-gray-300">
+              <div className="max-w-fit md:mr-2 px-4 py-2 rounded-md bg-gray-300">
                 <p className="text-gray-700 text-sm font-medium">
                   Email: {user.email}
                 </p>
               </div>
             </div>
             <div className="w-full md:w-1/2">
-              <div className="max-w-fit px-4 py-2 rounded-md bg-gray-300">
+              <div className="max-w-fit md:mr-2 px-4 py-2 rounded-md bg-gray-300">
                 <p className="text-gray-700 text-sm font-medium">
                   Joined date: {user.accountCreatedDate}
                 </p>
@@ -45,14 +45,14 @@ const Profile = () => {
           </div>
           <div className="flex flex-wrap mb-4">
             <div className="w-full md:w-1/2 mb-2 md:mb-0">
-              <div className="max-w-fit px-4 py-2 rounded-md bg-gray-300">
+              <div className="max-w-fit md:mr-2 px-4 py-2 rounded-md bg-gray-300">
                 <p className="text-gray-700 text-sm font-medium">
                   Phone number: {user.phoneNumber}
                 </p>
               </div>
             </div>
             <div className="w-full md:w-1/2">
-              <div className="max-w-fit px-4 py-2 rounded-md bg-gray-300">
+              <div className="max-w-fit md:mr-2 px-4 py-2 rounded-md bg-gray-300">
                 <p className="text-gray-700 text-sm font-medium">
                   Total of todos: {user.todoCount}
                 </p>
