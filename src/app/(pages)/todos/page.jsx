@@ -24,7 +24,7 @@ const Todos = () => {
   const onAddTodo = (data) => {
     const prepData = { id: Date.now(), todo: data.todo };
     setTodos((prevTodos) => [...prevTodos, prepData]);
-    reset(); // Clear the input value after submitting the form for adding new todo
+    reset();
   };
 
   const handleEditTodo = (id) => {
@@ -43,21 +43,15 @@ const Todos = () => {
         ),
       );
       setCurrentTodoId(null);
-      reset(); // Clear the input value after updating the todo
     }
   };
 
   const onDeleteTodo = (id) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
     if (currentTodoId === id) {
-      setCurrentTodoId(null); // Reset currentTodoId if deleted todo is being edited
-      reset(); // Clear the input value after deleting the todo
+      setCurrentTodoId(null);
     }
   };
-
-  useEffect(() => {
-    console.log(todos);
-  }, [todos]);
 
   return (
     <>
