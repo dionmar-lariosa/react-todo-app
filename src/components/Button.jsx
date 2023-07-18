@@ -1,4 +1,4 @@
-const Button = ({ children, color, ...rest }) => {
+const Button = ({ children, color, extraClass = "", ...rest }) => {
   const base = "font-semibold py-2 px-4 rounded";
   const btnColor = {
     primary: "bg-blue-500 hover:bg-blue-600 text-white",
@@ -6,7 +6,7 @@ const Button = ({ children, color, ...rest }) => {
     danger: "bg-red-500 hover:bg-red-600 text-white",
   };
 
-  const btnClass = `${btnColor[color]} ${base}`;
+  const btnClass = `${btnColor[color]} ${base} ${extraClass}`;
   return (
     <button {...rest} className={btnClass}>
       {children}
