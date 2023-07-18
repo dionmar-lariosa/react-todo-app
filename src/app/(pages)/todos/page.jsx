@@ -43,6 +43,7 @@ const Todos = () => {
         ),
       );
       setCurrentTodoId(null);
+      reset();
     }
   };
 
@@ -113,6 +114,7 @@ const Todos = () => {
                         cols="1"
                         rows="1"
                         {...register("todo")}
+                        autoFocus
                       ></textarea>
                       <button
                         type="submit"
