@@ -1,10 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { Edit, Trash2, CheckSquare, Maximize2 } from "react-feather";
 import Card from "@/components/Card";
 import TextArea from "@/components/TextArea";
+import InputError from "@/components/InputError";
+import Button from "@/components/Button";
+
+const schema = yup
+  .object({
+    todo: yup.string().required(),
+  })
+  .required();
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
@@ -14,12 +24,14 @@ const Todos = () => {
     register,
     handleSubmit,
     setValue,
+    clearErrors,
     formState: { errors },
     reset,
   } = useForm({
     defaultValues: {
       todo: "",
     },
+    resolver: yupResolver(schema),
   });
 
   const onAddTodo = (data) => {
@@ -52,25 +64,32 @@ const Todos = () => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
     if (currentTodoId === id) {
       setCurrentTodoId(null);
+      reset();
     }
   };
+
+  useEffect(() => {
+    if (currentTodoId !== null) {
+      clearErrors();
+    }
+  }, [currentTodoId, clearErrors]);
 
   return (
     <>
       <div className="flex items-center mb-4">
         <h1 className="text-xl font-bold mr-2">Todo List</h1>
       </div>
-      <div className="my-4 max-w-5xl mx-auto px-4">
+      <div className="max-w-5xl mx-auto px-4 mb-8">
         {!currentTodoId && (
-          <form onSubmit={handleSubmit(onAddTodo)}>
-            <TextArea {...register("todo")} />
-            <button
-              type="submit"
-              className="w-full px-4 py-2 bg-blue-500 text-white rounded-md"
-            >
-              Submit
-            </button>
-          </form>
+          <Card>
+            <form onSubmit={handleSubmit(onAddTodo)} className="flex flex-col">
+              <TextArea {...register("todo")} />
+              {errors.todo && <InputError message={errors.todo?.message} />}
+              <Button color="primary" extraClass="self-end mt-1">
+                Submit
+              </Button>
+            </form>
+          </Card>
         )}
       </div>
       {todos && todos.length > 0 && (
@@ -104,12 +123,12 @@ const Todos = () => {
                   {todo.id === currentTodoId ? (
                     <form onSubmit={handleSubmit(onUpdateTodo)}>
                       <TextArea autoFocus {...register("todo")} />
-                      <button
-                        type="submit"
-                        className="w-full px-4 py-2 bg-blue-500 text-white rounded-md"
-                      >
-                        Update
-                      </button>
+                      {errors.todo && (
+                        <InputError message={errors.todo?.message} />
+                      )}
+                      <Button color="primary" extraClass="w-full">
+                        Submit
+                      </Button>
                     </form>
                   ) : (
                     <p>{todo.todo}</p>
