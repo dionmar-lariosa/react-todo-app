@@ -35,7 +35,7 @@ const Todos = () => {
   });
 
   const onAddTodo = (data) => {
-    const prepData = { id: Date.now(), todo: data.todo };
+    const prepData = { id: Date.now(), todo: data.todo, isComplete: false };
     setTodos((prevTodos) => [...prevTodos, prepData]);
     reset();
   };
@@ -68,6 +68,14 @@ const Todos = () => {
     }
   };
 
+  const completeTodo = (id) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === id ? { ...todo, isComplete: !todo.isComplete } : todo,
+      ),
+    );
+  };
+
   useEffect(() => {
     if (currentTodoId !== null) {
       clearErrors();
@@ -76,8 +84,8 @@ const Todos = () => {
 
   return (
     <>
-      <div className="flex items-center mb-4">
-        <h1 className="text-xl font-bold mr-2">Todo List</h1>
+      <div className="flex items-center">
+        <h1 className="text-xl font-bold capitalize">todo list</h1>
       </div>
       <div className="max-w-5xl mx-auto px-4 mb-8">
         {!currentTodoId && (
@@ -116,8 +124,12 @@ const Todos = () => {
                     />
                     <CheckSquare
                       size={24}
-                      className="cursor-pointer hover:text-green-500"
-                      onClick={() => console.log("CheckSquare")}
+                      className={`cursor-pointer ${
+                        todo.isComplete
+                          ? "text-green-500"
+                          : "hover:text-green-500"
+                      }`}
+                      onClick={() => completeTodo(todo.id)}
                     />
                   </div>
                   {todo.id === currentTodoId ? (
@@ -131,7 +143,15 @@ const Todos = () => {
                       </Button>
                     </form>
                   ) : (
-                    <p>{todo.todo}</p>
+                    <p
+                      className={
+                        todo.isComplete
+                          ? "line-through italic text-gray-500"
+                          : "font-semibold"
+                      }
+                    >
+                      {todo.todo}
+                    </p>
                   )}
                 </div>
               </Card>
