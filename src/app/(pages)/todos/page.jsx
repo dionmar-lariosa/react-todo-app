@@ -57,6 +57,7 @@ const Todos = () => {
 
   const handleEditTodo = (id) => {
     setCurrentTodoId(id);
+    setModalConfig({ isOpen: false, msg: "", action: "update" });
     const todoToUpdate = todos.find((todo) => todo.id === id);
     if (todoToUpdate) {
       setValue("todo", todoToUpdate.todo);
@@ -70,6 +71,7 @@ const Todos = () => {
           todo.id === currentTodoId ? { ...todo, todo: data.todo } : todo,
         ),
       );
+      setModalConfig(modalConfigInit);
       setCurrentTodoId(null);
       reset();
     }
@@ -89,6 +91,8 @@ const Todos = () => {
         todo.id === id ? { ...todo, isComplete: !todo.isComplete } : todo,
       ),
     );
+    setCurrentTodoId(null);
+    reset();
   };
 
   useEffect(() => {
@@ -102,17 +106,20 @@ const Todos = () => {
       <div className="flex items-center">
         <h1 className="text-xl font-bold capitalize">todo list</h1>
       </div>
-      <div className="max-w-5xl mx-auto px-4 mb-8">
-        <Card>
-          <form onSubmit={handleSubmit(onAddTodo)} className="flex flex-col">
-            <TextArea {...register("todo")} />
-            {errors.todo && <InputError message={errors.todo?.message} />}
-            <Button color="primary" extraClass="self-end mt-1">
-              Submit
-            </Button>
-          </form>
-        </Card>
-      </div>
+      {modalConfig.action !== "update" ? (
+        <div className="max-w-5xl mx-auto px-4 mb-8">
+          <Card>
+            <form onSubmit={handleSubmit(onAddTodo)} className="flex flex-col">
+              <TextArea {...register("todo")} />
+              {errors.todo && <InputError message={errors.todo?.message} />}
+              <Button color="primary" extraClass="self-end mt-1">
+                Submit
+              </Button>
+            </form>
+          </Card>
+        </div>
+      ) : null}
+
       {todos && todos.length > 0 && (
         <div className="grid gap-5 md:grid-cols-3">
           {todos.map((todo) => {
@@ -159,7 +166,7 @@ const Todos = () => {
                       }}
                     />
                   </div>
-                  {todo.id === currentTodoId && modalConfig.open === false ? (
+                  {todo.id === currentTodoId && modalConfig.isOpen === false ? (
                     <form onSubmit={handleSubmit(onUpdateTodo)}>
                       <TextArea autoFocus {...register("todo")} />
                       {errors.todo && (
