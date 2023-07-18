@@ -9,6 +9,7 @@ import Card from "@/components/Card";
 import TextArea from "@/components/TextArea";
 import InputError from "@/components/InputError";
 import Button from "@/components/Button";
+import Modal from "@/components/Modal";
 
 const schema = yup
   .object({
@@ -16,9 +17,12 @@ const schema = yup
   })
   .required();
 
+const modalConfigInit = { isOpen: false, msg: "", action: "" };
+
 const Todos = () => {
   const [todos, setTodos] = useState([]);
   const [currentTodoId, setCurrentTodoId] = useState(null);
+  const [modalConfig, setModalConfig] = useState(modalConfigInit);
 
   const {
     register,
@@ -33,6 +37,17 @@ const Todos = () => {
     },
     resolver: yupResolver(schema),
   });
+
+  const handleActionConfirmation = () => {
+    if (modalConfig.action === "delete") {
+      onDeleteTodo(currentTodoId);
+    } else if (modalConfig.action === "complete") {
+      completeTodo(currentTodoId);
+    } else {
+      return null;
+    }
+    setModalConfig(modalConfigInit);
+  };
 
   const onAddTodo = (data) => {
     const prepData = { id: Date.now(), todo: data.todo, isComplete: false };
@@ -115,7 +130,14 @@ const Todos = () => {
                     <Trash2
                       size={24}
                       className="cursor-pointer hover:text-red-500"
-                      onClick={() => onDeleteTodo(todo.id)}
+                      onClick={() => {
+                        setModalConfig({
+                          isOpen: true,
+                          msg: "Are you sure you want to delete this todo?",
+                          action: "delete",
+                        });
+                        setCurrentTodoId(todo.id);
+                      }}
                     />
                     <Maximize2
                       size={24}
@@ -129,10 +151,17 @@ const Todos = () => {
                           ? "text-green-500"
                           : "hover:text-green-500"
                       }`}
-                      onClick={() => completeTodo(todo.id)}
+                      onClick={() => {
+                        setModalConfig({
+                          isOpen: true,
+                          msg: "Are you sure you want to mark this todo as complete?",
+                          action: "complete",
+                        });
+                        setCurrentTodoId(todo.id);
+                      }}
                     />
                   </div>
-                  {todo.id === currentTodoId ? (
+                  {todo.id === currentTodoId && modalConfig.open === false ? (
                     <form onSubmit={handleSubmit(onUpdateTodo)}>
                       <TextArea autoFocus {...register("todo")} />
                       {errors.todo && (
@@ -158,6 +187,17 @@ const Todos = () => {
             );
           })}
         </div>
+      )}
+      {modalConfig.isOpen && (
+        <Modal
+          title="Confirm Action"
+          message={modalConfig.msg}
+          onConfirm={handleActionConfirmation}
+          onCancel={() => {
+            setModalConfig(modalConfigInit);
+            setCurrentTodoId(null);
+          }}
+        />
       )}
     </>
   );
