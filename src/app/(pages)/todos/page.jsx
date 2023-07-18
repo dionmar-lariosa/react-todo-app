@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -23,6 +23,7 @@ const Todos = () => {
     register,
     handleSubmit,
     setValue,
+    clearErrors,
     formState: { errors },
     reset,
   } = useForm({
@@ -39,6 +40,7 @@ const Todos = () => {
   };
 
   const handleEditTodo = (id) => {
+    // clearErrors()
     setCurrentTodoId(id);
     const todoToUpdate = todos.find((todo) => todo.id === id);
     if (todoToUpdate) {
@@ -62,8 +64,15 @@ const Todos = () => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
     if (currentTodoId === id) {
       setCurrentTodoId(null);
+      reset();
     }
   };
+
+  useEffect(() => {
+    if (currentTodoId !== null) {
+      clearErrors();
+    }
+  }, [currentTodoId, clearErrors]);
 
   return (
     <>
