@@ -2,9 +2,18 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { Edit, Trash2, CheckSquare, Maximize2 } from "react-feather";
 import Card from "@/components/Card";
 import TextArea from "@/components/TextArea";
+import InputError from "@/components/InputError";
+
+const schema = yup
+  .object({
+    todo: yup.string().required(),
+  })
+  .required();
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
@@ -20,6 +29,7 @@ const Todos = () => {
     defaultValues: {
       todo: "",
     },
+    resolver: yupResolver(schema),
   });
 
   const onAddTodo = (data) => {
@@ -60,10 +70,11 @@ const Todos = () => {
       <div className="flex items-center mb-4">
         <h1 className="text-xl font-bold mr-2">Todo List</h1>
       </div>
-      <div className="my-4 max-w-5xl mx-auto px-4">
+      <div className="max-w-5xl mx-auto px-4">
         {!currentTodoId && (
           <form onSubmit={handleSubmit(onAddTodo)}>
             <TextArea {...register("todo")} />
+            {errors.todo && <InputError message={errors.todo?.message} />}
             <button
               type="submit"
               className="w-full px-4 py-2 bg-blue-500 text-white rounded-md"
@@ -104,6 +115,9 @@ const Todos = () => {
                   {todo.id === currentTodoId ? (
                     <form onSubmit={handleSubmit(onUpdateTodo)}>
                       <TextArea autoFocus {...register("todo")} />
+                      {errors.todo && (
+                        <InputError message={errors.todo?.message} />
+                      )}
                       <button
                         type="submit"
                         className="w-full px-4 py-2 bg-blue-500 text-white rounded-md"
