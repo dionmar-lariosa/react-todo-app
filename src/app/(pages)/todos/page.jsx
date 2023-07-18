@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { Edit, Trash2, CheckSquare, Maximize2 } from "react-feather";
 import Card from "@/components/Card";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TextArea from "@/components/TextArea";
 
 const Todos = () => {
