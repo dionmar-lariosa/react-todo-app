@@ -103,17 +103,15 @@ const Todos = () => {
         <h1 className="text-xl font-bold capitalize">todo list</h1>
       </div>
       <div className="max-w-5xl mx-auto px-4 mb-8">
-        {!currentTodoId && (
-          <Card>
-            <form onSubmit={handleSubmit(onAddTodo)} className="flex flex-col">
-              <TextArea {...register("todo")} />
-              {errors.todo && <InputError message={errors.todo?.message} />}
-              <Button color="primary" extraClass="self-end mt-1">
-                Submit
-              </Button>
-            </form>
-          </Card>
-        )}
+        <Card>
+          <form onSubmit={handleSubmit(onAddTodo)} className="flex flex-col">
+            <TextArea {...register("todo")} />
+            {errors.todo && <InputError message={errors.todo?.message} />}
+            <Button color="primary" extraClass="self-end mt-1">
+              Submit
+            </Button>
+          </form>
+        </Card>
       </div>
       {todos && todos.length > 0 && (
         <div className="grid gap-5 md:grid-cols-3">
