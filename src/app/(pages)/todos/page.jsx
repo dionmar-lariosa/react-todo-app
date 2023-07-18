@@ -1,9 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Edit, Trash2, CheckSquare, Maximize2 } from "react-feather";
 import Card from "@/components/Card";
-import { useState } from "react";
 import TextArea from "@/components/TextArea";
 
 const Todos = () => {
