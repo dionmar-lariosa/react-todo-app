@@ -179,11 +179,11 @@ const Todos = () => {
                     </form>
                   ) : (
                     <p
-                      className={
+                      className={`break-all ... ${
                         todo.isComplete
                           ? "line-through italic text-gray-500"
                           : "font-semibold"
-                      }
+                      }`}
                     >
                       {todo.todo}
                     </p>
