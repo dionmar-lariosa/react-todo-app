@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Edit, Trash2, CheckSquare, Maximize2 } from "react-feather";
+import { Edit, Trash2, CheckSquare, Eye } from "react-feather";
 import Card from "@/components/Card";
 import TextArea from "@/components/TextArea";
 import InputError from "@/components/InputError";
@@ -17,7 +17,7 @@ const schema = yup
   })
   .required();
 
-const actionConfigInit = { isModalOpen: false, msg: "", for: "" };
+const actionConfigInit = { isModalOpen: false, title: "", msg: "", for: "" };
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
@@ -138,16 +138,25 @@ const Todos = () => {
                       onClick={() => {
                         setActionConfig({
                           isModalOpen: true,
+                          title: "Confirm Action",
                           msg: "Are you sure you want to delete this todo?",
                           for: "delete",
                         });
                         setCurrentTodoId(todo.id);
                       }}
                     />
-                    <Maximize2
+                    <Eye
                       size={24}
                       className="cursor-pointer hover:text-gray-500"
-                      onClick={() => console.log("Maximize2")}
+                      onClick={() => {
+                        setActionConfig({
+                          isModalOpen: true,
+                          title: "Todo",
+                          msg: todo.todo,
+                          for: "view",
+                        });
+                        setCurrentTodoId(todo.id);
+                      }}
                     />
                     <CheckSquare
                       size={24}
@@ -159,6 +168,7 @@ const Todos = () => {
                       onClick={() => {
                         setActionConfig({
                           isModalOpen: true,
+                          title: "Confirm Action",
                           msg: "Are you sure you want to mark this todo as complete?",
                           for: "complete",
                         });
@@ -196,8 +206,9 @@ const Todos = () => {
       )}
       {actionConfig.isModalOpen && (
         <Modal
-          title="Confirm Action"
+          title={actionConfig.title}
           message={actionConfig.msg}
+          useFor={actionConfig.for}
           onConfirm={handleActionConfirmation}
           onCancel={() => {
             setActionConfig(actionConfigInit);
